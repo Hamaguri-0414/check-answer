@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>『今日のナゾ』答え合わせ</title>
+</head>
+
+<body>
+    <input type="number" id="input">
+    <button id="btn" onclick="return check()">解答</button>
+    <p id="result"></p>
+
+    <script>
+        let input = document.getElementById("input");
+        let result = document.getElementById("result")
+
+        async function check() {
+            const input_sha = await sha256(input.value)
+            if (input_sha == getParam("answer")) {
+                result.innerHTML = "正解！";
+            } else {
+                result.innerHTML = "不正解...";
+            }
+        }
+
+        function getParam(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        async function sha256(str) {
+            const buff = new Uint8Array([].map.call(str, (c) => c.charCodeAt(0))).buffer;
+            const digest = await crypto.subtle.digest('SHA-256', buff);
+            return [].map.call(new Uint8Array(digest), x => ('00' + x.toString(16)).slice(-2)).join('');
+        }
+
+    </script>
+</body>
+
+</html>

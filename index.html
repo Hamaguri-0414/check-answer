@@ -6,12 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>『今日のナゾ』答え合わせ</title>
+
+    <style>
+        div {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+    </style>
 </head>
 
 <body>
-    <input type="number" id="input">
-    <button id="btn" onclick="return check()">解答</button>
-    <p id="result"></p>
+    <div>
+        <input id="input">
+        <button id="btn" onclick="return check()">解答</button>
+    </div>
+    <div>
+        <img id="result" src="" alt="">
+    </div>
 
     <script>
         let input = document.getElementById("input");
@@ -20,9 +31,11 @@
         async function check() {
             const input_sha = await sha256(input.value)
             if (input_sha == getParam("answer")) {
-                result.innerHTML = "正解！";
+                result.alt = "正解";
+                result.src = "correct.jpg"
             } else {
-                result.innerHTML = "不正解...";
+                result.alt = "不正解";
+                result.src = "incorrect.jpg"
             }
         }
 

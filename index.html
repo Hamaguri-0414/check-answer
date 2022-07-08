@@ -32,9 +32,11 @@
         async function check() {
             const input_sha = await sha256(input.value)
             if (input_sha == getParam("answer")) {
+                console.log(getParam("answer"))
                 result.alt = "正解";
                 result.src = "correct.jpg"
-            } if (input_sha == getParam("answer2")) {
+            } else if (input_sha == getParam("answer2")) {
+                console.log(getParam("answer2"))
                 result.alt = "正解";
                 result.src = "quiz2.jpg"
             } else {
